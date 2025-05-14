@@ -1,9 +1,5 @@
-document.getElementById('click-button').addEventListener('click', () => {
-  gameState.money += gameState.incomePerClick;
+document.getElementById('start-button').addEventListener('click', () => {
+  document.getElementById('start-screen').style.display = 'none';
+  document.getElementById('game').style.display = 'block';
   updateUI();
-  if (Math.random() < 0.1) triggerRandomEvent(); // 10% chance
 });
-
-window.onload = () => {
-  updateUI();
-};
