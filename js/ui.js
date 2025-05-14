@@ -1,5 +1,6 @@
 function updateUI() {
   document.getElementById('money').innerText = `Money: $${gameState.money}`;
+  updatePlayerInfo();
 }
 
 function updatePlayerInfo() {
