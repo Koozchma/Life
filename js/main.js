@@ -35,6 +35,35 @@ window.onload = () => {
     startGame();
   });
 
+    function chooseCareer(careerOptions) {
+    pathScreen.innerHTML = `<h2>Choose a Career</h2>`;
+    careerOptions.forEach(career => {
+      const btn = document.createElement('button');
+      btn.textContent = career;
+      btn.classList.add('career-btn');
+      btn.addEventListener('click', () => {
+        gameState.career = career;
+        applyCareerBonuses(career);
+        pathScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+        updateUI();
+      });
+      pathScreen.appendChild(btn);
+    });
+  }
+
+    function applyCareerBonuses(career) {
+    const bonusMap = {
+      'Doctor': 3,
+      'Engineer': 2,
+      'Scientist': 2,
+      'Retail Worker': 1,
+      'Salesperson': 1,
+      'Apprentice': 1,
+    };
+    gameState.incomePerClick += bonusMap[career] ?? 1;
+  }
+
   // Begin gameplay UI
   function startGame() {
     pathScreen.style.display = 'none';
