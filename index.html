@@ -36,15 +36,27 @@
     }
 
     .screen {
-      display: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      max-width: 600px;
+      padding: 40px 20px;
+      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      min-height: 100vh;
+      background-color: #f7f9fc;
     }
 
     .screen.active {
-      display: flex;
+      opacity: 1;
+      visibility: visible;
+      position: relative;
     }
 
     h1, h2 {
@@ -107,12 +119,6 @@
     .event-log p {
       margin-bottom: 8px;
       font-size: 0.9rem;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .screen {
-        transition: opacity 0.4s ease;
-      }
     }
   </style>
 </head>
