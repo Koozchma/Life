@@ -7,11 +7,25 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
   <!-- Start Screen -->
   <div id="start-screen">
     <h1>Welcome to Lifeopoly Clicker</h1>
     <button id="start-button">Start Game</button>
+  </div>
+
+  <!-- Gender Selection -->
+  <div id="gender-screen" style="display: none;">
+    <h2>Select Your Gender</h2>
+    <button class="gender-button" data-gender="Male">Male</button>
+    <button class="gender-button" data-gender="Female">Female</button>
+    <button class="gender-button" data-gender="Other">Other</button>
+  </div>
+
+  <!-- Career/Education Choice -->
+  <div id="career-path-screen" style="display: none;">
+    <h2>Choose Your Path</h2>
+    <button id="education-button">Go to Higher Education</button>
+    <button id="career-button">Start Career Immediately</button>
   </div>
 
   <!-- Game UI -->
