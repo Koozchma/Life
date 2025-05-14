@@ -6,45 +6,154 @@
   <title>Lifeopoly Clicker</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #ffffff;
+      --accent-color: #1f1f1f;
+      --font-family: 'Inter', sans-serif;
+      --font-size: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      background-color: #f7f9fc;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: #45a049;
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #000;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d5d5d5;
+    }
+
+    .info {
+      margin: 10px 0;
+      font-weight: 600;
+    }
+
+    .event-log {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 10px;
+    }
+
+    .event-log p {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .screen {
+        transition: opacity 0.4s ease;
+      }
+    }
+  </style>
 </head>
 <body>
   <div id="container">
     <!-- Start Screen -->
-    <section id="start-screen" class="screen">
+    <section id="start-screen" class="screen active" aria-label="Start Game">
       <h1>Welcome to Lifeopoly Clicker</h1>
-      <button id="start-button" class="btn-primary">Start Game</button>
+      <button id="start-button" class="btn-primary" aria-label="Start Game">Start Game</button>
     </section>
 
     <!-- Gender Selection -->
-    <section id="gender-screen" class="screen hidden">
+    <section id="gender-screen" class="screen" aria-label="Select Gender">
       <h2>Select Your Gender</h2>
-      <div class="button-group">
-        <button class="btn-secondary gender-button" data-gender="Male">Male</button>
-        <button class="btn-secondary gender-button" data-gender="Female">Female</button>
-        <button class="btn-secondary gender-button" data-gender="Other">Other</button>
+      <div class="button-group" role="group" aria-label="Gender Selection">
+        <button class="btn-secondary gender-button" data-gender="Male" aria-label="Select Male Gender">Male</button>
+        <button class="btn-secondary gender-button" data-gender="Female" aria-label="Select Female Gender">Female</button>
+        <button class="btn-secondary gender-button" data-gender="Other" aria-label="Select Other Gender">Other</button>
       </div>
     </section>
 
     <!-- Career Path Selection -->
-    <section id="career-path-screen" class="screen hidden">
+    <section id="career-path-screen" class="screen" aria-label="Choose Career Path">
       <h2>Choose Your Path</h2>
-      <div class="button-group">
-        <button id="education-button" class="btn-primary">Go to Higher Education</button>
-        <button id="career-button" class="btn-primary">Start Career Immediately</button>
+      <div class="button-group" role="group" aria-label="Career Path Options">
+        <button id="education-button" class="btn-primary" aria-label="Choose Higher Education">Go to Higher Education</button>
+        <button id="career-button" class="btn-primary" aria-label="Start Career Immediately">Start Career Immediately</button>
       </div>
     </section>
 
     <!-- Game Screen -->
-    <section id="game" class="screen hidden">
+    <section id="game" class="screen" aria-label="Game Area">
       <h1>Lifeopoly Clicker</h1>
-      <div id="info-panel">
+      <div id="info-panel" role="region" aria-label="Player Information">
         <div id="money" class="info">Money: $0</div>
         <div id="career-choice" class="info"></div>
       </div>
-      <button id="click-button" class="btn-primary">Work (Click)</button>
+      <button id="click-button" class="btn-primary" aria-label="Work for Money">Work (Click)</button>
 
-      <div id="property-shop"></div>
-      <div id="events-log" class="event-log"></div>
+      <div id="property-shop" role="region" aria-label="Property Shop"></div>
+      <div id="events-log" class="event-log" role="log" aria-live="polite"></div>
     </section>
   </div>
 
