@@ -31,3 +31,16 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+
+#gender-screen,
+#career-path-screen {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.gender-button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
