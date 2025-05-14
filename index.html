@@ -1,47 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lifeopoly Clicker</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Start Screen -->
-  <div id="start-screen">
-    <h1>Welcome to Lifeopoly Clicker</h1>
-    <button id="start-button">Start Game</button>
+  <div id="container">
+    <!-- Start Screen -->
+    <section id="start-screen" class="screen">
+      <h1>Welcome to Lifeopoly Clicker</h1>
+      <button id="start-button" class="btn-primary">Start Game</button>
+    </section>
+
+    <!-- Gender Selection -->
+    <section id="gender-screen" class="screen hidden">
+      <h2>Select Your Gender</h2>
+      <div class="button-group">
+        <button class="btn-secondary gender-button" data-gender="Male">Male</button>
+        <button class="btn-secondary gender-button" data-gender="Female">Female</button>
+        <button class="btn-secondary gender-button" data-gender="Other">Other</button>
+      </div>
+    </section>
+
+    <!-- Career Path Selection -->
+    <section id="career-path-screen" class="screen hidden">
+      <h2>Choose Your Path</h2>
+      <div class="button-group">
+        <button id="education-button" class="btn-primary">Go to Higher Education</button>
+        <button id="career-button" class="btn-primary">Start Career Immediately</button>
+      </div>
+    </section>
+
+    <!-- Game Screen -->
+    <section id="game" class="screen hidden">
+      <h1>Lifeopoly Clicker</h1>
+      <div id="info-panel">
+        <div id="money" class="info">Money: $0</div>
+        <div id="career-choice" class="info"></div>
+      </div>
+      <button id="click-button" class="btn-primary">Work (Click)</button>
+
+      <div id="property-shop"></div>
+      <div id="events-log" class="event-log"></div>
+    </section>
   </div>
 
-  <!-- Gender Selection -->
-  <div id="gender-screen" style="display: none;">
-    <h2>Select Your Gender</h2>
-    <button class="gender-button" data-gender="Male">Male</button>
-    <button class="gender-button" data-gender="Female">Female</button>
-    <button class="gender-button" data-gender="Other">Other</button>
-  </div>
-
-  <!-- Career/Education Choice -->
-  <div id="career-path-screen" style="display: none;">
-    <h2>Choose Your Path</h2>
-    <button id="education-button">Go to Higher Education</button>
-    <button id="career-button">Start Career Immediately</button>
-  </div>
-
-  <!-- Game UI -->
-  <div id="game" style="display: none;">
-    <h1>Lifeopoly Clicker</h1>
-    <div id="money">Money: $0</div>
-    <button id="click-button">Work (Click)</button>
-
-    <div id="career-choice"></div>
-    <div id="property-shop"></div>
-    <div id="events-log"></div>
-  </div>
-
-<script src="js/gameState.js"></script>
-<script src="js/events.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/main.js"></script>
+  <script src="js/gameState.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
