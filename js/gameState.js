@@ -8,6 +8,7 @@ const gameState = {
   career: null,
   gender: null,
   path: null,
+  lastEvent: null, // timestamp of the last event
   stats: {
     age: 18,
     happiness: 50,
