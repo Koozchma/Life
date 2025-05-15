@@ -124,6 +124,15 @@
       margin-bottom: 8px;
       font-size: 0.9rem;
     }
+
+    .stats-panel {
+      margin: 20px 0;
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -160,6 +169,14 @@
         <div id="money" class="info">Money: $0</div>
         <div id="career-choice" class="info"></div>
       </div>
+
+      <div id="player-stats" class="stats-panel" role="region" aria-label="Player Stats">
+        <p><strong>Age:</strong> <span id="stat-age">18</span></p>
+        <p><strong>Happiness:</strong> <span id="stat-happiness">50</span></p>
+        <p><strong>Stress:</strong> <span id="stat-stress">0</span></p>
+        <p><strong>Health:</strong> <span id="stat-health">100</span></p>
+      </div>
+
       <button id="click-button" class="btn-primary" aria-label="Work for Money">Work (Click)</button>
 
       <div id="property-shop" role="region" aria-label="Property Shop"></div>
@@ -170,6 +187,19 @@
   <script src="js/gameState.js"></script>
   <script src="js/events.js"></script>
   <script src="js/ui.js"></script>
+  <script>
+    // Life progression system
+    setInterval(() => {
+      if (typeof gameState !== 'undefined' && gameState.stats) {
+        gameState.stats.age += 1;
+        gameState.stats.happiness = Math.max(0, gameState.stats.happiness - 1);
+        gameState.stats.stress = Math.min(100, gameState.stats.stress + 1);
+        if (typeof updatePlayerStatsUI === 'function') {
+          updatePlayerStatsUI();
+        }
+      }
+    }, 30000); // Every 30 seconds = 1 year
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
