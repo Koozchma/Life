@@ -5,6 +5,7 @@ function updateUI() {
   updatePlayerInfo();
   updatePlayerStatsUI();
   renderPropertyInventory();
+  updateBuyButtonState();
 }
 
 function updatePlayerInfo() {
@@ -27,4 +28,22 @@ function renderPropertyInventory() {
     item.textContent = `${p.color} Property ($${p.price})`;
     list.appendChild(item);
   });
+}
+
+function updateBuyButtonState() {
+  const popup = document.getElementById("property-popup");
+  if (popup.classList.contains("hidden")) return;
+
+  const priceMatch = document.getElementById("property-popup-desc").textContent.match(/\$(\d+)/);
+  if (!priceMatch) return;
+
+  const price = parseInt(priceMatch[1], 10);
+  const buyBtn = document.getElementById("buy-property-button");
+  if (gameState.money < price) {
+    buyBtn.disabled = true;
+    buyBtn.textContent = "Not enough money";
+  } else {
+    buyBtn.disabled = false;
+    buyBtn.textContent = "Buy";
+  }
 }
