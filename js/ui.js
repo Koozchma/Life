@@ -52,6 +52,8 @@ function updateBuyButtonState() {
 
 function updateExpBar() {
   const expFill = document.getElementById('exp-fill');
+  if (!expFill) return; // Prevent crash if exp-fill is missing
+
   const currentLevel = gameState.level;
   const nextLevelExp = currentLevel * 100;
   const percent = Math.min((gameState.exp / nextLevelExp) * 100, 100);
