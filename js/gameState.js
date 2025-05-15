@@ -9,6 +9,8 @@ const gameState = {
   gender: null,
   path: null,
   lastEvent: null, // timestamp of the last event
+  exp: 0, // current experience
+  level: 1, // current level
   stats: {
     age: 18,
     happiness: 50,
