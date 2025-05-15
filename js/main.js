@@ -1,93 +1,187 @@
-function showScreen(screenId) {
-  document.querySelectorAll('.screen').forEach(screen => {
-    screen.classList.remove('active');
-  });
-  document.getElementById(screenId).classList.add('active');
-}
-
-window.onload = () => {
-  const startBtn = document.getElementById('start-button');
-  const genderButtons = document.querySelectorAll('.gender-button');
-  const educationBtn = document.getElementById('education-button');
-  const careerBtn = document.getElementById('career-button');
-  const clickButton = document.getElementById('click-button');
-
-  // Passive income every second
-  setInterval(() => {
-    const totalPassive = gameState.properties.reduce((sum, p) => sum + p.income, 0);
-    if (totalPassive > 0) {
-      gameState.money += totalPassive;
-      updateUI();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lifeopoly Clicker</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3A86FF;
+      --secondary-color: #ffffff;
+      --accent-color: #03045E;
+      --font-family: 'Rubik', 'Inter', sans-serif;
+      --font-size: 16px;
+      --highlight-color: #FFBE0B;
+      --muted-color: #f1f1f1;
     }
-  }, 1000);
 
-  // Start → Gender screen
-  startBtn.addEventListener('click', () => {
-    showScreen('gender-screen');
-  });
-
-  // Gender → Path screen
-  genderButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      gameState.gender = button.dataset.gender;
-      showScreen('career-path-screen');
-    });
-  });
-
-  // Path → Career choices
-  educationBtn.addEventListener('click', () => {
-    gameState.path = 'education';
-    showCareerOptions(['Doctor', 'Engineer', 'Scientist']);
-  });
-
-  careerBtn.addEventListener('click', () => {
-    gameState.path = 'career';
-    showCareerOptions(['Retail Worker', 'Salesperson', 'Apprentice']);
-  });
-
-  // Choose a career → Game screen
-  function showCareerOptions(options) {
-    const screen = document.getElementById('career-path-screen');
-    screen.innerHTML = `<h2>Choose a Career</h2><div class="button-group"></div>`;
-    const buttonGroup = screen.querySelector('.button-group');
-
-    options.forEach(career => {
-      const btn = document.createElement('button');
-      btn.textContent = career;
-      btn.className = 'btn-secondary';
-      btn.addEventListener('click', () => {
-        gameState.career = career;
-        applyCareerBonuses(career);
-        showScreen('game');
-        updateUI();
-      });
-      buttonGroup.appendChild(btn);
-    });
-
-    // Keep the screen visible with career buttons
-    screen.classList.add('active');
-  }
-
-  function applyCareerBonuses(career) {
-    const bonuses = {
-      'Doctor': 3,
-      'Engineer': 2,
-      'Scientist': 2,
-      'Retail Worker': 1,
-      'Salesperson': 1,
-      'Apprentice': 1
-    };
-    gameState.incomePerClick += bonuses[career] ?? 1;
-  }
-
-  // Main clicker logic
-  clickButton.addEventListener('click', () => {
-    gameState.money += gameState.incomePerClick;
-    updateUI();
-    if (Math.random() < 0.1) {
-      triggerRandomEvent();
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-  });
 
-  updateUI();
-};
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size);
+      background-color: #f7f9fc;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .screen {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      max-width: 600px;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f7f9fc;
+    }
+
+    .screen.active {
+      opacity: 1;
+      visibility: visible;
+      position: relative;
+    }
+
+    h1, h2 {
+      margin-bottom: 20px;
+      color: var(--accent-color);
+      font-weight: 700;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 12px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      width: 100%;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+    }
+
+    .btn-primary:hover {
+      background-color: #265cc5;
+    }
+
+    .btn-secondary {
+      background-color: var(--muted-color);
+      color: #000;
+    }
+
+    .btn-secondary:hover {
+      background-color: #e2e6ea;
+    }
+
+    .info {
+      margin: 10px 0;
+      font-weight: 500;
+    }
+
+    .event-log {
+      margin-top: 20px;
+      width: 100%;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 10px;
+    }
+
+    .event-log p {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .stats-panel {
+      margin: 20px 0;
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Start Screen -->
+    <section id="start-screen" class="screen active" aria-label="Start Game">
+      <h1>Welcome to Lifeopoly Clicker</h1>
+      <button id="start-button" class="btn-primary" aria-label="Start Game">Start Game</button>
+    </section>
+
+    <!-- Gender Selection -->
+    <section id="gender-screen" class="screen" aria-label="Select Gender">
+      <h2>Select Your Gender</h2>
+      <div class="button-group" role="group" aria-label="Gender Selection">
+        <button class="btn-secondary gender-button" data-gender="Male" aria-label="Select Male Gender">Male</button>
+        <button class="btn-secondary gender-button" data-gender="Female" aria-label="Select Female Gender">Female</button>
+        <button class="btn-secondary gender-button" data-gender="Other" aria-label="Select Other Gender">Other</button>
+      </div>
+    </section>
+
+    <!-- Career Path Selection -->
+    <section id="career-path-screen" class="screen" aria-label="Choose Career Path">
+      <h2>Choose Your Path</h2>
+      <div class="button-group" role="group" aria-label="Career Path Options">
+        <button id="education-button" class="btn-primary" aria-label="Choose Higher Education">Go to Higher Education</button>
+        <button id="career-button" class="btn-primary" aria-label="Start Career Immediately">Start Career Immediately</button>
+      </div>
+    </section>
+
+    <!-- Game Screen -->
+    <section id="game" class="screen" aria-label="Game Area">
+      <h1>Lifeopoly Clicker</h1>
+      <div id="info-panel" role="region" aria-label="Player Information">
+        <div id="money" class="info">Money: $0</div>
+        <div id="career-choice" class="info"></div>
+      </div>
+
+      <div id="player-stats" class="stats-panel" role="region" aria-label="Player Stats"></div>
+
+      <button id="click-button" class="btn-primary" aria-label="Work for Money">Work (Click)</button>
+
+      <div id="property-shop" role="region" aria-label="Property Shop"></div>
+      <div id="events-log" class="event-log" role="log" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <script src="js/gameState.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
