@@ -1,85 +1,84 @@
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(screen => {
+    screen.classList.remove('active');
+  });
+  document.getElementById(screenId).classList.add('active');
+}
+
 window.onload = () => {
-  // DOM Elements
   const startBtn = document.getElementById('start-button');
-  const startScreen = document.getElementById('start-screen');
-  const genderScreen = document.getElementById('gender-screen');
-  const pathScreen = document.getElementById('career-path-screen');
-  const gameScreen = document.getElementById('game');
   const genderButtons = document.querySelectorAll('.gender-button');
   const educationBtn = document.getElementById('education-button');
   const careerBtn = document.getElementById('career-button');
+  const clickButton = document.getElementById('click-button');
 
-  // Start game → Go to gender screen
+  // Start → Gender screen
   startBtn.addEventListener('click', () => {
-    startScreen.style.display = 'none';
-    genderScreen.style.display = 'block';
+    showScreen('gender-screen');
   });
 
-  // Gender selected → Go to education/career choice
+  // Gender → Path screen
   genderButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      gameState.gender = e.target.dataset.gender;
-      genderScreen.style.display = 'none';
-      pathScreen.style.display = 'block';
+    button.addEventListener('click', () => {
+      gameState.gender = button.dataset.gender;
+      showScreen('career-path-screen');
     });
   });
 
-  // Choose education or career → Start game
+  // Path → Career choices
   educationBtn.addEventListener('click', () => {
     gameState.path = 'education';
-    startGame();
+    showCareerOptions(['Doctor', 'Engineer', 'Scientist']);
   });
 
   careerBtn.addEventListener('click', () => {
     gameState.path = 'career';
-    startGame();
+    showCareerOptions(['Retail Worker', 'Salesperson', 'Apprentice']);
   });
 
-    function chooseCareer(careerOptions) {
-    pathScreen.innerHTML = `<h2>Choose a Career</h2>`;
-    careerOptions.forEach(career => {
+  // Choose a career → Game screen
+  function showCareerOptions(options) {
+    const screen = document.getElementById('career-path-screen');
+    screen.innerHTML = `<h2>Choose a Career</h2><div class="button-group"></div>`;
+    const buttonGroup = screen.querySelector('.button-group');
+
+    options.forEach(career => {
       const btn = document.createElement('button');
       btn.textContent = career;
-      btn.classList.add('career-btn');
+      btn.className = 'btn-secondary';
       btn.addEventListener('click', () => {
         gameState.career = career;
         applyCareerBonuses(career);
-        pathScreen.style.display = 'none';
-        gameScreen.style.display = 'block';
+        showScreen('game');
         updateUI();
       });
-      pathScreen.appendChild(btn);
+      buttonGroup.appendChild(btn);
     });
+
+    // Keep the screen visible with career buttons
+    screen.classList.add('active');
   }
 
-    function applyCareerBonuses(career) {
-    const bonusMap = {
+  function applyCareerBonuses(career) {
+    const bonuses = {
       'Doctor': 3,
       'Engineer': 2,
       'Scientist': 2,
       'Retail Worker': 1,
       'Salesperson': 1,
-      'Apprentice': 1,
+      'Apprentice': 1
     };
-    gameState.incomePerClick += bonusMap[career] ?? 1;
+    gameState.incomePerClick += bonuses[career] ?? 1;
   }
 
-  // Begin gameplay UI
-  function startGame() {
-    pathScreen.style.display = 'none';
-    gameScreen.style.display = 'block';
-    updateUI();
-  }
-
-  // Work click
-  document.getElementById('click-button').addEventListener('click', () => {
+  // Main clicker logic
+  clickButton.addEventListener('click', () => {
     gameState.money += gameState.incomePerClick;
     updateUI();
-
     if (Math.random() < 0.1) {
       triggerRandomEvent();
     }
   });
 
-  updateUI(); // initial UI update
+  updateUI();
 };
