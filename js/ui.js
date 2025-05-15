@@ -7,6 +7,7 @@ function updateUI() {
   renderPropertyInventory();
   updateBuyButtonState();
   updateExpBar();
+  updateCareerProgressUI();
 }
 
 function updatePlayerInfo() {
@@ -55,4 +56,12 @@ function updateExpBar() {
   const nextLevelExp = currentLevel * 100;
   const percent = Math.min((gameState.exp / nextLevelExp) * 100, 100);
   expFill.style.width = `${percent}%`;
+}
+
+function updateCareerProgressUI() {
+  if (!gameState.careerProgress) return;
+  const { track, goal, stage, ranks } = gameState.careerProgress;
+  const percent = Math.min((track / goal) * 100, 100);
+  document.getElementById("career-progress-fill").style.width = `${percent}%`;
+  document.getElementById("career-rank-label").textContent = `Rank: ${ranks[stage] || "Maxed Out"}`;
 }
