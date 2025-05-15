@@ -1,237 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lifeopoly Clicker</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #3A86FF;
-      --secondary-color: #ffffff;
-      --accent-color: #03045E;
-      --font-family: 'Rubik', 'Inter', sans-serif;
-      --font-size: 16px;
-      --highlight-color: #FFBE0B;
-      --muted-color: #f1f1f1;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: var(--font-family);
-      font-size: var(--font-size);
-      background-color: #f7f9fc;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    #container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .screen {
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      max-width: 600px;
-      padding: 40px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-color: #f7f9fc;
-    }
-
-    .screen.active {
-      opacity: 1;
-      visibility: visible;
-      position: relative;
-    }
-
-    h1, h2 {
-      margin-bottom: 20px;
-      color: var(--accent-color);
-      font-weight: 700;
-    }
-
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 100%;
-    }
-
-    .btn-primary, .btn-secondary {
-      padding: 12px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      width: 100%;
-      text-align: center;
-      font-weight: 500;
-    }
-
-    .btn-primary {
-      background-color: var(--primary-color);
-      color: var(--secondary-color);
-    }
-
-    .btn-primary:hover {
-      background-color: #265cc5;
-    }
-
-    .btn-secondary {
-      background-color: var(--muted-color);
-      color: #000;
-    }
-
-    .btn-secondary:hover {
-      background-color: #e2e6ea;
-    }
-
-    .info {
-      margin: 10px 0;
-      font-weight: 500;
-    }
-
-    .event-log {
-      margin-top: 20px;
-      width: 100%;
-      max-height: 200px;
-      overflow-y: auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      padding: 10px;
-    }
-
-    .event-log p {
-      margin-bottom: 8px;
-      font-size: 0.9rem;
-    }
-
-    .stats-panel {
-      margin: 20px 0;
-      padding: 10px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      width: 100%;
-    }
-  </style>
 </head>
 <body>
-  <div id="container">
+  <main id="container">
+
     <!-- Start Screen -->
     <section id="start-screen" class="screen active" aria-label="Start Game">
       <h1>Welcome to Lifeopoly Clicker</h1>
-      <button id="start-button" class="btn-primary" aria-label="Start Game">Start Game</button>
+      <button id="start-button" class="btn-primary">Start Game</button>
     </section>
 
     <!-- Gender Selection -->
     <section id="gender-screen" class="screen" aria-label="Select Gender">
       <h2>Select Your Gender</h2>
-      <div class="button-group" role="group" aria-label="Gender Selection">
-        <button class="btn-secondary gender-button" data-gender="Male" aria-label="Select Male Gender">Male</button>
-        <button class="btn-secondary gender-button" data-gender="Female" aria-label="Select Female Gender">Female</button>
-        <button class="btn-secondary gender-button" data-gender="Other" aria-label="Select Other Gender">Other</button>
+      <div class="button-group">
+        <button class="btn-secondary gender-button" data-gender="Male">Male</button>
+        <button class="btn-secondary gender-button" data-gender="Female">Female</button>
+        <button class="btn-secondary gender-button" data-gender="Other">Other</button>
       </div>
     </section>
 
     <!-- Career Path Selection -->
     <section id="career-path-screen" class="screen" aria-label="Choose Career Path">
       <h2>Choose Your Path</h2>
-      <div class="button-group" role="group" aria-label="Career Path Options">
-        <button id="education-button" class="btn-primary" aria-label="Choose Higher Education">Go to Higher Education</button>
-        <button id="career-button" class="btn-primary" aria-label="Start Career Immediately">Start Career Immediately</button>
+      <div class="button-group">
+        <button id="education-button" class="btn-primary">Go to Higher Education</button>
+        <button id="career-button" class="btn-primary">Start Career Immediately</button>
       </div>
     </section>
 
     <!-- Game Screen -->
     <section id="game" class="screen" aria-label="Game Area">
       <h1>Lifeopoly Clicker</h1>
-      <div id="info-panel" role="region" aria-label="Player Information">
+
+      <div id="info-panel">
         <div id="money" class="info">Money: $0</div>
         <div id="career-choice" class="info"></div>
       </div>
 
-      <div id="player-stats" class="stats-panel" role="region" aria-label="Player Stats">
+      <div id="player-stats" class="stats-panel">
         <p><strong>Age:</strong> <span id="stat-age">18</span></p>
         <p><strong>Happiness:</strong> <span id="stat-happiness">50</span></p>
         <p><strong>Stress:</strong> <span id="stat-stress">0</span></p>
         <p><strong>Health:</strong> <span id="stat-health">100</span></p>
       </div>
 
-      <button id="click-button" class="btn-primary" aria-label="Work for Money">Work (Click)</button>
+      <button id="click-button" class="btn-primary">Work (Click)</button>
 
-      <div id="property-shop" role="region" aria-label="Property Shop"></div>
-      <div id="events-log" class="event-log" role="log" aria-live="polite"></div>
+      <div id="property-shop" role="region" aria-label="Property Shop">
+        <h3>Available Properties</h3>
+        <div class="button-group" id="property-buttons"></div>
+      </div>
+
+      <div class="event-log" role="log" aria-live="polite">
+        <h3>Recent Events</h3>
+        <div id="events-log"></div>
+      </div>
     </section>
-  </div>
+  </main>
 
   <script src="js/gameState.js"></script>
   <script src="js/events.js"></script>
   <script src="js/ui.js"></script>
-  <script>
-    // Life progression system
-    setInterval(() => {
-      if (typeof gameState !== 'undefined' && gameState.stats) {
-        gameState.stats.age += 1;
-        gameState.stats.happiness = Math.max(0, gameState.stats.happiness - 1);
-        gameState.stats.stress = Math.min(100, gameState.stats.stress + 1);
-        if (typeof updatePlayerStatsUI === 'function') {
-          updatePlayerStatsUI();
-        }
-      }
-    }, 30000); // Every 30 seconds = 1 year
-
-    // Random life/property event system every 5–10 seconds
-    function triggerTimedEvent() {
-      const colors = ["Red","Blue","Green","Yellow","Purple","Orange","Black","White","Pink","Brown"];
-      const propertyColors = colors.sort(() => 0.5 - Math.random());
-      const eventType = Math.random() < 0.5 ? 'property' : 'life';
-      let eventMessage = '';
-
-      if (eventType === 'property') {
-        const color = propertyColors[0];
-        const price = {
-          Red: 2000, Blue: 1800, Green: 1600, Yellow: 1400, Purple: 1200,
-          Orange: 1000, Black: 800, White: 600, Pink: 400, Brown: 200
-        }[color];
-        eventMessage = `🏠 Landed on a ${color} property. Buy for $${price}?`;
-      } else {
-        const lifeEvents = [
-          "🚗 Car payment due: -$300",
-          "📈 Investment payout: +$500",
-          "💳 Credit card bill: -$150",
-          "🎉 Gift from relative: +$200"
-        ];
-        eventMessage = lifeEvents[Math.floor(Math.random() * lifeEvents.length)];
-      }
-
-      const log = document.getElementById('events-log');
-      const entry = document.createElement('p');
-      entry.textContent = eventMessage;
-      log.prepend(entry);
-    }
-
-    setInterval(triggerTimedEvent, Math.floor(Math.random() * 5000) + 5000); // Every 5–10 seconds
-  </script>
   <script src="js/main.js"></script>
+  <script>
+    // Dynamically generate property buttons
+    const properties = [
+      { color: "Brown", price: 200 },
+      { color: "Pink", price: 400 },
+      { color: "White", price: 600 },
+      { color: "Black", price: 800 },
+      { color: "Orange", price: 1000 },
+      { color: "Purple", price: 1200 },
+      { color: "Yellow", price: 1400 },
+      { color: "Green", price: 1600 },
+      { color: "Blue", price: 1800 },
+      { color: "Red", price: 2000 },
+    ];
+
+    const propertyContainer = document.getElementById("property-buttons");
+    properties.forEach(prop => {
+      const btn = document.createElement("button");
+      btn.className = "btn-secondary";
+      btn.setAttribute("data-color", prop.color);
+      btn.setAttribute("data-price", prop.price);
+      btn.textContent = `Buy ${prop.color} Property ($${prop.price})`;
+      propertyContainer.appendChild(btn);
+    });
+  </script>
 </body>
 </html>
