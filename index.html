@@ -199,6 +199,38 @@
         }
       }
     }, 30000); // Every 30 seconds = 1 year
+
+    // Random life/property event system every 5–10 seconds
+    function triggerTimedEvent() {
+      const colors = ["Red","Blue","Green","Yellow","Purple","Orange","Black","White","Pink","Brown"];
+      const propertyColors = colors.sort(() => 0.5 - Math.random());
+      const eventType = Math.random() < 0.5 ? 'property' : 'life';
+      let eventMessage = '';
+
+      if (eventType === 'property') {
+        const color = propertyColors[0];
+        const price = {
+          Red: 2000, Blue: 1800, Green: 1600, Yellow: 1400, Purple: 1200,
+          Orange: 1000, Black: 800, White: 600, Pink: 400, Brown: 200
+        }[color];
+        eventMessage = `🏠 Landed on a ${color} property. Buy for $${price}?`;
+      } else {
+        const lifeEvents = [
+          "🚗 Car payment due: -$300",
+          "📈 Investment payout: +$500",
+          "💳 Credit card bill: -$150",
+          "🎉 Gift from relative: +$200"
+        ];
+        eventMessage = lifeEvents[Math.floor(Math.random() * lifeEvents.length)];
+      }
+
+      const log = document.getElementById('events-log');
+      const entry = document.createElement('p');
+      entry.textContent = eventMessage;
+      log.prepend(entry);
+    }
+
+    setInterval(triggerTimedEvent, Math.floor(Math.random() * 5000) + 5000); // Every 5–10 seconds
   </script>
   <script src="js/main.js"></script>
 </body>
