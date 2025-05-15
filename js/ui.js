@@ -32,6 +32,7 @@ function updateUI() {
   document.getElementById('money').innerText = `Money: $${gameState.money}`;
   updatePlayerInfo();
   renderPropertyShop();
+  updatePlayerStatsUI(); // <- add this
 }
 
 function updatePlayerInfo() {
@@ -49,3 +50,11 @@ function updateEventLog(desc) {
   entry.textContent = desc;
   log.prepend(entry);
 }
+
+function updatePlayerStatsUI() {
+  document.getElementById('stat-age').textContent = gameState.stats.age;
+  document.getElementById('stat-happiness').textContent = gameState.stats.happiness;
+  document.getElementById('stat-stress').textContent = gameState.stats.stress;
+  document.getElementById('stat-health').textContent = gameState.stats.health;
+}
+
