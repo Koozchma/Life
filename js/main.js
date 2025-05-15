@@ -5,6 +5,14 @@ function showScreen(screenId) {
     screen.classList.remove('active');
   });
   document.getElementById(screenId).classList.add('active');
+
+  // Hide property popup and clear timeout if switching screens
+  const popup = document.getElementById("property-popup");
+  popup.classList.add("hidden");
+  if (typeof propertyTimeout !== 'undefined' && propertyTimeout) {
+    clearTimeout(propertyTimeout);
+    propertyTimeout = null;
+  }
 }
 
 window.onload = () => {
