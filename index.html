@@ -53,9 +53,18 @@
 
       <button id="click-button" class="btn-primary">Work (Click)</button>
 
-      <div id="property-shop" role="region" aria-label="Property Shop">
-        <h3>Available Properties</h3>
-        <div class="button-group" id="property-buttons"></div>
+      <div id="property-inventory" class="stats-panel">
+        <h3>Your Properties</h3>
+        <ul id="owned-properties"></ul>
+      </div>
+
+      <div id="property-popup" class="popup hidden">
+        <h3 id="property-popup-title">Property Opportunity</h3>
+        <p id="property-popup-desc"></p>
+        <div class="button-group">
+          <button id="buy-property-button" class="btn-primary">Buy</button>
+          <button id="skip-property-button" class="btn-secondary">Skip</button>
+        </div>
       </div>
 
       <div class="event-log" role="log" aria-live="polite">
@@ -70,7 +79,6 @@
   <script src="js/ui.js"></script>
   <script src="js/main.js"></script>
   <script>
-    // Dynamically generate property buttons
     const properties = [
       { color: "Brown", price: 200 },
       { color: "Pink", price: 400 },
@@ -81,18 +89,8 @@
       { color: "Yellow", price: 1400 },
       { color: "Green", price: 1600 },
       { color: "Blue", price: 1800 },
-      { color: "Red", price: 2000 },
+      { color: "Red", price: 2000 }
     ];
-
-    const propertyContainer = document.getElementById("property-buttons");
-    properties.forEach(prop => {
-      const btn = document.createElement("button");
-      btn.className = "btn-secondary";
-      btn.setAttribute("data-color", prop.color);
-      btn.setAttribute("data-price", prop.price);
-      btn.textContent = `Buy ${prop.color} Property ($${prop.price})`;
-      propertyContainer.appendChild(btn);
-    });
   </script>
 </body>
 </html>
