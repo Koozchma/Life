@@ -6,6 +6,7 @@ function updateUI() {
   updatePlayerStatsUI();
   renderPropertyInventory();
   updateBuyButtonState();
+  updateExpBar();
 }
 
 function updatePlayerInfo() {
@@ -46,4 +47,12 @@ function updateBuyButtonState() {
     buyBtn.disabled = false;
     buyBtn.textContent = "Buy";
   }
+}
+
+function updateExpBar() {
+  const expFill = document.getElementById('exp-fill');
+  const currentLevel = gameState.level;
+  const nextLevelExp = currentLevel * 100;
+  const percent = Math.min((gameState.exp / nextLevelExp) * 100, 100);
+  expFill.style.width = `${percent}%`;
 }
