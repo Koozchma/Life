@@ -6,7 +6,6 @@ function showScreen(screenId) {
   });
   document.getElementById(screenId).classList.add('active');
 
-  // Hide property popup and clear timeout if switching screens
   const popup = document.getElementById("property-popup");
   popup.classList.add("hidden");
   if (typeof propertyTimeout !== 'undefined' && propertyTimeout) {
@@ -65,30 +64,61 @@ window.onload = () => {
   }
 
   function applyCareerBonuses(career) {
-    const bonuses = {
-      Doctor: 3,
-      Engineer: 2,
-      Scientist: 2,
-      'Retail Worker': 1,
-      Salesperson: 1,
-      Apprentice: 1
+    const rankMap = {
+      Doctor: ['Intern', 'Med Student', 'Resident', 'Doctor', 'Specialist'],
+      Engineer: ['Trainee', 'Junior Engineer', 'Engineer', 'Senior Engineer', 'Architect'],
+      Scientist: ['Lab Tech', 'Researcher', 'Lead Scientist', 'Professor', 'Pioneer'],
+      Salesperson: ['Trainee', 'Associate', 'Senior Rep', 'Manager', 'Director'],
+      Apprentice: ['Helper', 'Apprentice', 'Journeyman', 'Expert', 'Master'],
+      'Retail Worker': ['Clerk', 'Senior Clerk', 'Lead Clerk', 'Supervisor', 'Store Manager']
     };
-    gameState.incomePerClick += bonuses[career] ?? 1;
+
+    gameState.incomePerClick = 1;
+    gameState.careerProgress = {
+      track: 0,
+      goal: 5,
+      stage: 0,
+      ranks: rankMap[career] || []
+    };
   }
 
   clickButton.addEventListener('click', () => {
     gameState.money += gameState.incomePerClick;
+
+    // Add EXP logic
+    gameState.exp += 10;
+    const nextLevelExp = gameState.level * 100;
+    if (gameState.exp >= nextLevelExp) {
+      gameState.exp -= nextLevelExp;
+      gameState.level++;
+      gameState.incomePerClick++;
+
+      const log = document.getElementById("events-log");
+      const msg = document.createElement("p");
+      msg.classList.add("credit");
+      msg.textContent = `🎉 You leveled up to Level ${gameState.level}! Income increased.`;
+      log.prepend(msg);
+    }
+
+    if (gameState.careerProgress) {
+      gameState.careerProgress.track++;
+      if (gameState.careerProgress.track >= gameState.careerProgress.goal) {
+        gameState.careerProgress.stage++;
+        gameState.careerProgress.track = 0;
+        gameState.incomePerClick += 1;
+      }
+    }
+
     updateUI();
     if (Math.random() < 0.1) triggerRandomEvent();
   });
 
-  // Passive life progression system
   setInterval(() => {
     gameState.stats.age += 1;
     gameState.stats.happiness = Math.max(0, gameState.stats.happiness - 1);
     gameState.stats.stress = Math.min(100, gameState.stats.stress + 1);
     updateUI();
-  }, 30000); // every 30 seconds = 1 year
+  }, 30000);
 
   updateUI();
 };
