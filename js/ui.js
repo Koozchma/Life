@@ -31,6 +31,7 @@ function renderPropertyShop() {
 function updateUI() {
   document.getElementById('money').innerText = `Money: $${gameState.money}`;
   updatePlayerInfo();
+  renderPropertyShop();
 }
 
 function updatePlayerInfo() {
