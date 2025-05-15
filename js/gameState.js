@@ -12,3 +12,4 @@ const gameState = {
     stress: 0,
     health: 100
   }
+};
