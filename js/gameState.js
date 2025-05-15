@@ -1,3 +1,5 @@
+// gameState.js
+
 const gameState = {
   money: 0,
   incomePerClick: 1,
