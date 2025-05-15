@@ -1,3 +1,5 @@
+// main.js
+
 function showScreen(screenId) {
   document.querySelectorAll('.screen').forEach(screen => {
     screen.classList.remove('active');
@@ -71,6 +73,14 @@ window.onload = () => {
     updateUI();
     if (Math.random() < 0.1) triggerRandomEvent();
   });
+
+  // Passive life progression system
+  setInterval(() => {
+    gameState.stats.age += 1;
+    gameState.stats.happiness = Math.max(0, gameState.stats.happiness - 1);
+    gameState.stats.stress = Math.min(100, gameState.stats.stress + 1);
+    updateUI();
+  }, 30000); // every 30 seconds = 1 year
 
   updateUI();
 };
