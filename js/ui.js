@@ -4,6 +4,7 @@ function updateUI() {
   document.getElementById('money').textContent = `Money: $${gameState.money}`;
   updatePlayerInfo();
   updatePlayerStatsUI();
+  renderPropertyInventory();
 }
 
 function updatePlayerInfo() {
@@ -16,4 +17,14 @@ function updatePlayerStatsUI() {
   document.getElementById('stat-happiness').textContent = gameState.stats.happiness;
   document.getElementById('stat-stress').textContent = gameState.stats.stress;
   document.getElementById('stat-health').textContent = gameState.stats.health;
+}
+
+function renderPropertyInventory() {
+  const list = document.getElementById('owned-properties');
+  list.innerHTML = '';
+  gameState.properties.forEach(p => {
+    const item = document.createElement('li');
+    item.textContent = `${p.color} Property ($${p.price})`;
+    list.appendChild(item);
+  });
 }
