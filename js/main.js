@@ -12,6 +12,15 @@ window.onload = () => {
   const careerBtn = document.getElementById('career-button');
   const clickButton = document.getElementById('click-button');
 
+  // Passive income every second
+  setInterval(() => {
+    const totalPassive = gameState.properties.reduce((sum, p) => sum + p.income, 0);
+    if (totalPassive > 0) {
+      gameState.money += totalPassive;
+      updateUI();
+    }
+  }, 1000);
+
   // Start → Gender screen
   startBtn.addEventListener('click', () => {
     showScreen('gender-screen');
